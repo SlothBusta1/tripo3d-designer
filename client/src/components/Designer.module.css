@@ -1,0 +1,414 @@
+/* ── Top-level container ────────────────────────────────── */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Two-column responsive layout ───────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.formPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.viewerPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .viewerPanel {
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+
+/* ── History context banner ─────────────────────────────── */
+.historyBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.875rem;
+  background: #f0fdfa;
+  border: 1px solid #99f6e4;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: #0f766e;
+}
+
+.historyBanner strong {
+  font-weight: 600;
+}
+
+.historyBannerClose {
+  background: none;
+  border: none;
+  color: #0f766e;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.historyBannerClose:hover {
+  text-decoration: underline;
+}
+
+/* ── Mode tabs ──────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.tab {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #6b7280;
+  margin-bottom: -2px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab:hover { color: #374151; }
+
+.tab.active {
+  color: #0d9488;
+  border-bottom-color: #0d9488;
+  font-weight: 600;
+}
+
+/* ── Form ───────────────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.required { color: #ef4444; margin-left: 2px; }
+
+.optional {
+  font-weight: 400;
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+.textarea {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+}
+
+.textarea:disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+}
+
+.select:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+}
+
+.row .field { flex: 1; }
+
+/* ── Dropzone ───────────────────────────────────────────── */
+.dropzone {
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 2.25rem 1rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+}
+
+.dropzone:hover        { border-color: #0d9488; background: #f0fdfa; }
+.dropzone.dragOver     { border-color: #0d9488; background: #ccfbf1; }
+.dropzone.hasImage {
+  padding: 0.75rem;
+  border-style: solid;
+  border-color: #0d9488;
+  background: #f0fdfa;
+}
+
+.dropzoneInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  color: #9ca3af;
+}
+
+.dropzoneInner p { margin: 0; font-size: 0.9rem; }
+.browseLink { color: #0d9488; font-weight: 600; }
+.hint { font-size: 0.78rem !important; color: #c4c8cd !important; }
+
+.imagePreview {
+  max-height: 220px;
+  max-width: 100%;
+  border-radius: 6px;
+  object-fit: contain;
+  display: block;
+}
+
+.clearImage {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  margin-top: 0.25rem;
+}
+
+.clearImage:hover { color: #b91c1c; }
+
+/* ── Generate button ────────────────────────────────────── */
+.generateBtn {
+  padding: 0.75rem 1.5rem;
+  background: #0d9488;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 0.25rem;
+  align-self: flex-start;
+}
+
+.generateBtn:hover:not(:disabled) { background: #0f766e; }
+.generateBtn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ── Progress ───────────────────────────────────────────── */
+.progressSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  background: white;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.statusLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.progressPct {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+}
+
+.progressTrack {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #0d9488, #06b6d4);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+  min-width: 4px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.progressBar.indeterminate {
+  width: 40% !important;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+/* ── Error ──────────────────────────────────────────────── */
+.errorBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+  border-radius: 8px;
+  padding: 0.875rem 1rem;
+}
+
+.errorBox p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #b91c1c;
+  flex: 1;
+}
+
+.retryBtn {
+  background: none;
+  border: 1.5px solid #b91c1c;
+  color: #b91c1c;
+  padding: 0.375rem 0.875rem;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.retryBtn:hover { background: #fecaca; }
+
+/* ── Output / downloads ─────────────────────────────────── */
+.outputSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: #f0fdfa;
+  border: 1.5px solid #99f6e4;
+  border-radius: 8px;
+}
+
+.outputTitle {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0f766e;
+}
+
+.downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  background: white;
+  border: 1.5px solid #0d9488;
+  border-radius: 6px;
+  color: #0d9488;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.downloadBtn:hover { background: #ccfbf1; }
+
+.badge {
+  background: #0d9488;
+  color: white;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.newGenerationBtn {
+  align-self: flex-start;
+  background: none;
+  border: 1.5px solid #0d9488;
+  color: #0d9488;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.newGenerationBtn:hover { background: #ccfbf1; }
