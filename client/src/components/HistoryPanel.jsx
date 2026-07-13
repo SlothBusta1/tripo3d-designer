@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "./HistoryPanel.module.css";
 
 function formatAge(ts) {
@@ -7,6 +8,19 @@ function formatAge(ts) {
   const h = Math.floor(m / 60);
   if (h < 24) return `${h}h ago`;
   return `${Math.floor(h / 24)}d ago`;
+}
+
+function Thumb({ src }) {
+  const [broken, setBroken] = useState(false);
+  if (!src || broken) return <CubeIcon />;
+  return (
+    <img
+      src={`/api/tripo/file?url=${encodeURIComponent(src)}`}
+      alt=""
+      className={styles.thumbImg}
+      onError={() => setBroken(true)}
+    />
+  );
 }
 
 export default function HistoryPanel({ entries, onSelect, selectedId, onClear }) {
@@ -21,20 +35,16 @@ export default function HistoryPanel({ entries, onSelect, selectedId, onClear })
         </button>
       </div>
 
-      <div className={styles.list}>
+      <div className={styles.grid}>
         {entries.map((entry) => (
           <button
             key={entry.id}
             type="button"
-            className={`${styles.item} ${entry.id === selectedId ? styles.selected : ""}`}
+            className={`${styles.card} ${entry.id === selectedId ? styles.selected : ""}`}
             onClick={() => onSelect(entry)}
           >
             <div className={styles.thumb}>
-              {entry.thumbnail ? (
-                <img src={entry.thumbnail} alt="" className={styles.thumbImg} />
-              ) : (
-                <CubeIcon />
-              )}
+              <Thumb src={entry.thumbnail} />
             </div>
             <div className={styles.info}>
               <span className={styles.label}>{entry.label}</span>
@@ -55,8 +65,8 @@ export default function HistoryPanel({ entries, onSelect, selectedId, onClear })
 function CubeIcon() {
   return (
     <svg
-      width="18"
-      height="18"
+      width="22"
+      height="22"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"

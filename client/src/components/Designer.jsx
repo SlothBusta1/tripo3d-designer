@@ -234,8 +234,8 @@ export default function Designer() {
                     Prompt <span className={styles.required}>*</span>
                   </label>
                   <textarea
-                    className={styles.textarea}
-                    rows={3}
+                    className={styles.promptTextarea}
+                    rows={6}
                     placeholder="e.g. A ceramic coffee mug with a handle, realistic texture"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
@@ -244,20 +244,19 @@ export default function Designer() {
                   />
                 </div>
 
-                <div className={styles.field}>
-                  <label className={styles.label}>
-                    Negative prompt{" "}
-                    <span className={styles.optional}>(optional)</span>
-                  </label>
+                <details className={styles.negPromptDetails}>
+                  <summary className={styles.negPromptSummary}>
+                    Negative prompt <span className={styles.optional}>(optional)</span>
+                  </summary>
                   <textarea
-                    className={styles.textarea}
+                    className={styles.negPromptTextarea}
                     rows={2}
                     placeholder="e.g. blurry, low quality, distorted"
                     value={negPrompt}
                     onChange={(e) => setNegPrompt(e.target.value)}
                     disabled={isRunning}
                   />
-                </div>
+                </details>
               </>
             ) : (
               <div className={styles.field}>
@@ -400,7 +399,10 @@ export default function Designer() {
           )}
 
           {/* 3D viewer */}
-          <ModelViewer glbUrl={activeGlb} />
+          <ModelViewer
+            glbUrl={activeGlb}
+            fallbackImage={activeOutput?.rendered_image ?? null}
+          />
 
           {/* Downloads — shown for current generation or selected history item */}
           {activeOutput && (
