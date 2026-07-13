@@ -8,8 +8,9 @@ import { ToastContainer } from "./Toast";
 import styles from "./Designer.module.css";
 
 const MODEL_VERSIONS = [
-  { value: "v2.5-20250123", label: "v2.5 (latest)" },
-  { value: "v2.0-20240919", label: "v2.0" },
+  { value: "P1-20260311", label: "P1.0 (newest — fast, clean topology)" },
+  { value: "v2.5-20250123", label: "v2.5 (high detail)" },
+  { value: "v2.0-20240919", label: "v2.0 (legacy)" },
 ];
 
 const FILE_FORMATS = [
