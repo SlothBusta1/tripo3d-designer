@@ -33,9 +33,14 @@ function stripDataUrlPrefix(dataUrl) {
   return dataUrl.split(",")[1] ?? dataUrl;
 }
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function Designer() {
   // ── Form state ───────────────────────────────────────────
   const [mode, setMode] = useState("text");
+  const [email, setEmail] = useState(() => {
+    try { return localStorage.getItem("tripo3d_email") || ""; } catch { return ""; }
+  });
   const [prompt, setPrompt] = useState("");
   const [negPrompt, setNegPrompt] = useState("");
   const [imageFile, setImageFile] = useState(null);
@@ -145,7 +150,10 @@ export default function Designer() {
       fileFormat,
     };
 
+    try { localStorage.setItem("tripo3d_email", email.trim()); } catch { /* ignore */ }
+
     const shared = {
+      email: email.trim(),
       model_version: modelVersion,
       texture: true,
       pbr: true,
@@ -188,6 +196,7 @@ export default function Designer() {
   // ── Derived display state ────────────────────────────────
   const canSubmit =
     !isRunning &&
+    EMAIL_RE.test(email.trim()) &&
     (mode === "text" ? prompt.trim().length >= 3 : imageFile !== null);
 
   // Active model — history selection overrides current generation
@@ -228,6 +237,25 @@ export default function Designer() {
 
           {/* Generation form */}
           <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.field}>
+              <label className={styles.label}>
+                Email <span className={styles.required}>*</span>
+              </label>
+              <input
+                type="email"
+                className={styles.textarea}
+                style={{ resize: "none" }}
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isRunning}
+                required
+              />
+              <p className={styles.hint} style={{ marginTop: "0.25rem" }}>
+                {/* keep this number in sync with RATE_LIMIT_COUNT in api/tripo/task.js */}
+                Required to generate — limited to 5 generations per day.
+              </p>
+            </div>
             {mode === "text" ? (
               <>
                 <div className={styles.field}>
