@@ -7,11 +7,26 @@ import HistoryPanel from "./HistoryPanel";
 import { ToastContainer } from "./Toast";
 import styles from "./Designer.module.css";
 
+// NOTE on the H3.1 entry: Tripo's H3.1 (aka v3.1) high-detail model is real
+// and follows their vX.X-YYYYMMDD version-string convention (confirmed via
+// their own blog + the same pattern P1.0/v2.5/v2.0 below already use), but
+// the exact date suffix here could not be independently confirmed against
+// Tripo's own docs (they're a JS-rendered SPA that blocks automated
+// fetching). If generating with H3.1 selected fails, check your Tripo
+// developer dashboard for the current exact model_version string and
+// update this value — the failure mode is just a clean API error, nothing
+// silently wrong or billed.
 const MODEL_VERSIONS = [
-  { value: "P1-20260311", label: "P1.0 (newest — fast, clean topology)" },
+  { value: "P1-20260311",  label: "P1.0 (newest — fast, clean topology)" },
+  { value: "v3.1-20260211", label: "H3.1 (highest detail, production-ready)" },
   { value: "v2.5-20250123", label: "v2.5 (high detail)" },
   { value: "v2.0-20240919", label: "v2.0 (legacy)" },
 ];
+
+// Face limit applied only when H3.1 is selected — 75k is enough detail for
+// printable parts without ballooning file size the way H3.1's max (2M
+// polys) would. Left unset for the other models so their own defaults apply.
+const H31_FACE_LIMIT = 75000;
 
 const FILE_FORMATS = [
   { value: "glb", label: "GLB" },
@@ -158,6 +173,9 @@ export default function Designer() {
       texture: true,
       pbr: true,
       file_format: fileFormat,
+      // quad_mesh / smart_low_poly deliberately omitted — those target game
+      // engines, not relevant for print-ready output
+      ...(modelVersion === "v3.1-20260211" && { face_limit: H31_FACE_LIMIT }),
     };
 
     if (mode === "text") {
